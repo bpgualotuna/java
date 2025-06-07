@@ -22,6 +22,8 @@ public class TestPersona {
 		p.edad=25;
 		p.estatura=1.89;
 		
+		
+		
 	}
 
 }
