@@ -9,9 +9,9 @@ public class TestCuadrado {
 		Cuadrado c2 = new Cuadrado();
 		Cuadrado c3 = new Cuadrado();
 		
-		c1.lado = 4;
-		c2.lado = 6;
-		c3.lado = 2;
+		c1.setLado(4);
+		c2.setLado(6);;
+		c3.setLado(8);;
 		//calculo areas
 		double areaC1 = c1.calcularArea();
 		double areaC2 = c2.calcularArea();

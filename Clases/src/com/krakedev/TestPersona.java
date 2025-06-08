@@ -8,19 +8,19 @@ public class TestPersona {
 		Persona p;
 		Persona p2 = new Persona();
 		p = new Persona();// instanciar un objeto persona, 
-		System.out.println("nombre: " + p.nombre);
-		System.out.println("edad: " + p.edad);
-		System.out.println("estatura" + p.estatura);
+		System.out.println("nombre: " + p.getNombre());
+		System.out.println("edad: " + p.getEdad());
+		System.out.println("estatura" + p.getEstatura());
 		
-		p2.nombre="Angelina";
+		p2.setNombre("Angelina");
 		
-		System.out.println("nombre 2: " + p2.nombre);
+		System.out.println("nombre 2: " + p2.getNombre());
 		
 		//Modificar atributos
 		
-		p.nombre="Mario";
-		p.edad=25;
-		p.estatura=1.89;
+		p.setNombre("Matio");
+		p.setEdad(25);
+		p.setEstatura(1.8);
 		
 		
 		

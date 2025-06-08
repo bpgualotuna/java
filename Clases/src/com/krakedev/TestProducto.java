@@ -11,23 +11,23 @@ public class TestProducto {
 		productoA = new Producto();
 		productoB = new Producto();
 		//Modificacion de atributos
-		productoA.descripcion="Hibuprofeno";
-		productoA.precio=2.5;
-		productoA.stockActual=50;
+		productoA.setDescripcion("Hibuprofeno");
+		productoA.setPrecio(2.5);
+		productoA.setStockActual(50);
 		
-		productoB.descripcion="Henterogermina";
-		productoB.precio=0.8;
-		productoB.stockActual=90;
+		productoB.setDescripcion("henterogermina");
+		productoB.setPrecio(0.8);
+		productoB.setStockActual(80);
 		//muestra en pantalla
 		System.out.println("Producto1");
-		System.out.println("Descripcion: " + productoA.descripcion);
-		System.out.println("Precio: " + productoA.precio);
-		System.out.println("StockActual: " + productoA.stockActual);
+		System.out.println("Descripcion: " + productoA.getDescripcion());
+		System.out.println("Precio: " + productoA.getPrecio());
+		System.out.println("StockActual: " + productoA.getStockActual());
 
 		System.out.println("Producto2");
-		System.out.println("Descripcion: " + productoB.descripcion);
-		System.out.println("Precio: " + productoB.precio);
-		System.out.println("StockActual: " + productoB.stockActual);
+		System.out.println("Descripcion: " + productoB.getDescripcion());
+		System.out.println("Precio: " + productoB.getPrecio());
+		System.out.println("StockActual: " + productoB.getStockActual());
 		
 		
 	}

@@ -2,8 +2,16 @@ package com.krakedev;
 
 public class Cuadrado {
 	//Atributos
-	double lado;
+	private double lado;
 	
+	public double getLado() {
+		return lado;
+	}
+
+	public void setLado(double lado) {
+		this.lado = lado;
+	}
+
 	//Metodos
 	public double calcularArea() {
 		double respuesta = Math.pow(lado,2);
