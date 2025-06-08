@@ -8,6 +8,14 @@ public class TestPersona {
 		Persona p;
 		Persona p2 = new Persona();
 		p = new Persona();// instanciar un objeto persona, 
+		Persona p3 = new Persona("Brayan", 25,1.8);
+		
+		System.out.println("nombre: " + p3.getNombre());
+		System.out.println("edad: " + p3.getEdad());
+		System.out.println("estatura" + p3.getEstatura());
+		
+		
+		
 		System.out.println("nombre: " + p.getNombre());
 		System.out.println("edad: " + p.getEdad());
 		System.out.println("estatura" + p.getEstatura());

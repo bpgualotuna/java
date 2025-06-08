@@ -8,8 +8,8 @@ public class TestProducto {
 		Producto productoA;
 		Producto productoB;
 		//Intanciamiento de objetos
-		productoA = new Producto();
-		productoB = new Producto();
+		productoA = new Producto("","Hibuprofeno",2.5,60);
+		productoB = new Producto("","Henterogermina",0.8,60);
 		//Modificacion de atributos
 		productoA.setDescripcion("Hibuprofeno");
 		productoA.setPrecio(2.5);
