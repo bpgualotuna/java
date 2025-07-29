@@ -60,4 +60,42 @@ public class ProveedoresBDD {
 
 		return proveedores;
 	}
+	
+	
+	
+	public void insertar(Proveedor proveedor) throws KrakeDevException {
+		Connection con = null;
+
+		try {
+			con = ConexionBDD.obtenerConexion();
+			PreparedStatement ps = con
+					.prepareStatement("insert into proveedores(identificador,tipo_doc,nombre,telefono,correo,direccion) values(?,?,?,?,?,?)");
+			ps.setString(1, proveedor.getIdentificador());
+			ps.setString(2, proveedor.getTipoDocumento().getCodigo());
+			ps.setString(3, proveedor.getNombre());
+			ps.setString(4, proveedor.getTelefono());
+			ps.setString(5, proveedor.getCorreo());
+			ps.setString(6, proveedor.getDireccion());
+
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new KrakeDevException("Error al insertar el cliente Detalles: " + e.getMessage());
+		} catch (KrakeDevException e) {
+			// TODO Auto-generated catch block
+			throw e;
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+
+	}
+
 }
