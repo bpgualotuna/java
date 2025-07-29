@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.krakedev.inventarios.entidades.Proveedor;
+import com.krakedev.inventarios.entidades.TipoDocumento;
 import com.krakedev.inventarios.excepciones.KrakeDevException;
 import com.krakedev.inventarios.utils.ConexionBDD;
 
@@ -25,9 +26,10 @@ public class ProveedoresBDD {
 
 		try {
 			con = ConexionBDD.obtenerConexion();
-			ps = con.prepareStatement("select identificador,tipo_doc,nombre,telefono,correo,direccion "
-					+ "from proveedores "
-					+ "where upper(nombre) like ?");
+			ps = con.prepareStatement("select identificador,tipo_doc,td.descripcion,nombre,telefono,correo,direccion "
+					+ "from proveedores prov, tipo_documento td "
+					+ "where prov.tipo_doc = td.codigo "
+					+ "and upper(nombre) like ?");
 			
 			ps.setString(1, "%" + subcadena.toUpperCase() + "%");
 			rs = ps.executeQuery();
@@ -35,11 +37,13 @@ public class ProveedoresBDD {
 			while (rs.next()) {
 				String identificador = rs.getString("identificador");
 				String tipoDoc = rs.getString("tipo_doc");
+				String descripcionTipoDocumento = rs.getString("descripcion");
 				String nombre = rs.getString("nombre");
 				String telefono = rs.getString("telefono");
 				String correo = rs.getString("correo");
 				String direccion = rs.getString("direccion");
-				proveedor = new Proveedor(identificador,tipoDoc, nombre,telefono,correo,direccion);
+				TipoDocumento td = new TipoDocumento(tipoDoc,descripcionTipoDocumento);
+				proveedor = new Proveedor(identificador,td, nombre,telefono,correo,direccion);
 				proveedores.add(proveedor);
 
 			}
