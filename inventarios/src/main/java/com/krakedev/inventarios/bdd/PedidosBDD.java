@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -91,11 +92,15 @@ public class PedidosBDD {
 		Connection con = null;
 		PreparedStatement ps = null;
 		PreparedStatement psDet = null;
+		PreparedStatement psStock = null;
 		ResultSet rsClave = null;
 		int codigoCabecera = 0;
+		
+		
 
 		Date fechaActual = new Date();
 		java.sql.Date fechaSQL = new java.sql.Date(fechaActual.getTime());
+		Timestamp fechaHoraActual = new Timestamp(fechaActual.getTime());
 
 		try {
 			con = ConexionBDD.obtenerConexion();
@@ -125,8 +130,21 @@ public class PedidosBDD {
 				psDet.setBigDecimal(2, subtotal);
 
 				psDet.executeUpdate();
+				
+				psStock = con.prepareStatement("insert into historial_stock(fecha,referencia,producto,cantidad) "
+						+ "values(?,?,?,?);");
+				psStock.setTimestamp(1,fechaHoraActual);
+				psStock.setString(2,"Pedido " + pedido.getCodigo());
+				psStock.setInt(3, det.getProducto().getCodigo());
+				psStock.setInt(4,det.getCantidadRecibida());
+				
+				psStock.executeUpdate();
 
 			}
+			
+			
+			
+			
 			
 
 			System.out.println("CODIGO GENERADO>>>>> " + codigoCabecera);
