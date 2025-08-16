@@ -7,6 +7,10 @@ public class Categoria {
 	
 	
 	
+	public Categoria(int codigo) {
+		super();
+		this.codigo = codigo;
+	}
 	public Categoria() {
 		super();
 	}

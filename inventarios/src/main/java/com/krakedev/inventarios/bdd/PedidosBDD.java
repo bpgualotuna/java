@@ -11,7 +11,10 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import com.krakedev.inventarios.entidades.DetallePedido;
+import com.krakedev.inventarios.entidades.EstadoPedido;
 import com.krakedev.inventarios.entidades.Pedido;
+import com.krakedev.inventarios.entidades.Producto;
+import com.krakedev.inventarios.entidades.Proveedor;
 import com.krakedev.inventarios.excepciones.KrakeDevException;
 import com.krakedev.inventarios.utils.ConexionBDD;
 
@@ -167,6 +170,84 @@ public class PedidosBDD {
 			}
 		}
 
+	}
+	
+	public ArrayList<Pedido> busquedaProveedor(String identificador)throws KrakeDevException {
+		
+		ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
+		
+		Connection con  = null;
+		PreparedStatement psC = null;
+		ResultSet rs = null;
+		Proveedor proveedor = new Proveedor();
+		EstadoPedido estadoPedido = new EstadoPedido();
+		
+		
+		try {
+			
+			con = ConexionBDD.obtenerConexion();
+			psC = con.prepareStatement("select * from cabecera_pedido "
+					+ "where proveedor = ?");
+			psC.setString(1, identificador);
+			rs = psC.executeQuery();
+			
+			while(rs.next()) {
+				int numeroCab = rs.getInt("numero");
+				proveedor.setIdentificador(identificador);
+				Date fecha = rs.getDate("fecha");
+				estadoPedido.setCodigo(rs.getString("estado"));
+				
+				PreparedStatement psD = con.prepareStatement("select codigo,cabecera_ped,producto,cantidad_sol,cast(subtotal as decimal(6,2)),cantidad_rec "
+						+ "from detalle_pedido "
+						+ "where cabecera_ped = ?");
+				psD.setInt(1, numeroCab);
+				ResultSet rsD = psD.executeQuery();
+				ArrayList<DetallePedido> detalles = new ArrayList<DetallePedido>();
+				
+				while(rsD.next()) {
+					DetallePedido detalle = new DetallePedido();
+					Producto producto = new Producto();
+					producto.setCodigo(rsD.getInt("producto"));
+					int cantidadSol = rsD.getInt("cantidad_sol");
+					BigDecimal subtotal = rsD.getBigDecimal("subtotal");
+					int cantidadRec = rsD.getInt("cantidad_rec");
+					
+					detalle.setProducto(producto);
+					detalle.setCantidadSolicitada(cantidadSol);
+					detalle.setSubtotal(subtotal);
+					detalle.setCantidadRecibida(cantidadRec);
+					
+					detalles.add(detalle);
+				}
+				
+				Pedido pedido = new Pedido();
+				
+				pedido.setCodigo(numeroCab);
+				pedido.setProveedor(proveedor);
+				pedido.setFecha(fecha);
+				pedido.setEstado(estadoPedido);
+				pedido.setDetalles(detalles);
+				
+				pedidos.add(pedido);
+				
+				
+				
+			}
+			
+			
+		} catch (KrakeDevException e) {
+
+			e.printStackTrace();
+			throw e;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new KrakeDevException("Error al buscar proveedor. detalle: " + e.getMessage());
+		}
+
+		
+		
+		return pedidos;
 	}
 
 }

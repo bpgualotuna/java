@@ -35,6 +35,24 @@ public class ServiciosProveedores {
 		}
 
 	}
+	
+	@Path("buscarId/{sub}")
+	@GET
+	@Produces("application/json")
+	public Response buscarIden(@PathParam("sub") String subcadena) {
+		ProveedoresBDD provBDD = new ProveedoresBDD();
+		ArrayList<Proveedor> proveedores = null;
+		try {
+			proveedores = provBDD.buscarIden(subcadena);
+			return Response.ok(proveedores).build();
+		} catch (KrakeDevException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return Response.serverError().build();
+
+		}
+
+	}
 
 	@Path("crear")
 	@POST
